@@ -71,7 +71,7 @@ class ProductServiceImplTest {
 
     @Test
     void shouldIncrementQuantityByGivenAmount() {
-        when(productRepository.findById(2)).thenReturn(Optional.of(product_2()));
+        when(productRepository.findByIdAndLock(2)).thenReturn(Optional.of(product_2()));
         when(productRepository.save(any())).then(returnsFirstArg());
 
         Product product = productService.incrementQuantity(2, 10);
@@ -81,7 +81,7 @@ class ProductServiceImplTest {
 
     @Test
     void shouldDecrementQuantityByGivenAmount() {
-        when(productRepository.findById(2)).thenReturn(Optional.of(product_2()));
+        when(productRepository.findByIdAndLock(2)).thenReturn(Optional.of(product_2()));
         when(productRepository.save(any())).then(returnsFirstArg());
 
         Product product = productService.decrementQuantity(2, 2);
@@ -91,7 +91,7 @@ class ProductServiceImplTest {
 
     @Test
     void shouldThrowExceptionIfResultingQuantityIsNegative() {
-        when(productRepository.findById(2)).thenReturn(Optional.of(product_2()));
+        when(productRepository.findByIdAndLock(2)).thenReturn(Optional.of(product_2()));
 
         assertThrows(RuntimeException.class, () -> productService.decrementQuantity(2, 10));
     }
